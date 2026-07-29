@@ -1,7 +1,8 @@
+import type { NextFunction, Request, Response } from "express";
 import { ApiError } from "../utils/ApiError.js";
 
 // Global error-handling middleware
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
   // Check if the error is an instance of ApiError
   if (err instanceof ApiError) {
     const { statusCode, message, errors, stack } = err;

@@ -1,5 +1,5 @@
-import { asyncHandler } from "../utils/asyncHandler.js"; 
-import { ApiError } from "../utils/ApiError.js";  
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Url } from "../models/url.models.js";
 import { User } from "../models/user.models.js";
@@ -7,15 +7,16 @@ import dotenv from "dotenv";
 import crypto from "crypto";
 import QRCode from "qrcode";
 import bcrypt from "bcrypt";
+import type { Request, Response } from "express";
 
 dotenv.config();
 
-const generateHash = (input) => {
-    return crypto.createHash("sha256").update(input).digest("hex");
-  };
+const generateHash = (input: string): string => {
+  return crypto.createHash("sha256").update(input).digest("hex");
+};
 
 // Endpoint to shorten a URL
-const shortenUrl = asyncHandler(async (req, res) => {
+const shortenUrl = asyncHandler(async (req: Request, res: Response) => {
   const { longUrl, shortCode, password, expireInHours } = req.body;
 
   if (!longUrl) {
@@ -23,7 +24,7 @@ const shortenUrl = asyncHandler(async (req, res) => {
   }
 
   try {
-    let finalShortCode;
+    let finalShortCode: string;
 
     if (shortCode) {
       const existingUrl = await Url.findOne({ shortCode });
@@ -49,12 +50,12 @@ const shortenUrl = asyncHandler(async (req, res) => {
     const shortUrl = `${req.protocol}://${req.get("host")}/${finalShortCode}`;
     const qrCode = await QRCode.toDataURL(shortUrl);
 
-    let hashedPassword = null;
+    let hashedPassword: string | null = null;
     if (password) {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    const newUrlData = {
+    const newUrlData: Record<string, unknown> = {
       longUrl,
       shortCode: finalShortCode,
       shortUrl,
@@ -98,7 +99,7 @@ const shortenUrl = asyncHandler(async (req, res) => {
 });
 
 // Endpoint to redirect a short URL to the original URL
-const redirectToLongUrl = asyncHandler(async (req, res) => {
+const redirectToLongUrl = asyncHandler(async (req: Request, res: Response) => {
   const { shortCode } = req.params;
 
   try {
@@ -109,7 +110,7 @@ const redirectToLongUrl = asyncHandler(async (req, res) => {
     }
 
     // Check if the URL has expired, only if `expiresAt` is set
-    if (url.expiresAt && url.expiresAt < Date.now()) {
+    if (url.expiresAt && url.expiresAt < new Date()) {
       throw new ApiError(410, "This URL has expired");
     }
 
@@ -125,7 +126,7 @@ const redirectToLongUrl = asyncHandler(async (req, res) => {
   }
 });
 
-const validatePasswordAndRedirect = asyncHandler(async (req, res) => {
+const validatePasswordAndRedirect = asyncHandler(async (req: Request, res: Response) => {
   const { shortCode, password } = req.body;
 
   if (!shortCode || !password) {
@@ -154,7 +155,7 @@ const validatePasswordAndRedirect = asyncHandler(async (req, res) => {
   );
 });
 
-const getUserLinks = asyncHandler(async (req, res) => {
+const getUserLinks = asyncHandler(async (req: Request, res: Response) => {
   const userId = req.user ? req.user._id : null;
 
   if (!userId) {
@@ -178,9 +179,9 @@ const getUserLinks = asyncHandler(async (req, res) => {
 
     if (!user.links || user.links.length === 0) {
       console.error(`No links found for user with ID ${userId}`);
-      return res.status(404).json(
-        new ApiResponse(404, "No shortened URLs found for the user", [])
-      );
+      return res
+        .status(404)
+        .json(new ApiResponse(404, "No shortened URLs found for the user", []));
     }
 
     console.log("User links fetched successfully:", user.links);
@@ -192,24 +193,23 @@ const getUserLinks = asyncHandler(async (req, res) => {
       })
     );
   } catch (error) {
-    console.error("Error fetching user links:", error.message); // Log the actual error
+    console.error("Error fetching user links:", (error as Error).message); // Log the actual error
     throw new ApiError(500, "Internal server error");
   }
 });
 
-const deleteUrl = asyncHandler(async (req, res)=>{
-  const {shortCode} = req.params;
-  try{
-    const url = await Url.findOneAndDelete({shortCode});
-    if(!url){
+const deleteUrl = asyncHandler(async (req: Request, res: Response) => {
+  const { shortCode } = req.params;
+  try {
+    const url = await Url.findOneAndDelete({ shortCode });
+    if (!url) {
       throw new ApiError(404, "URL not found");
     }
     res.json(new ApiResponse(200, "URL deleted successfully"));
-  }
-  catch(error){
+  } catch (error) {
     console.error("Error:", error);
     throw new ApiError(500, "Internal server error");
   }
-})
+});
 
 export { shortenUrl, redirectToLongUrl, validatePasswordAndRedirect, getUserLinks, deleteUrl };
