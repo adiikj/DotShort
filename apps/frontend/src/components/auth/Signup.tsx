@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { registerUser } from '../../api/api';
 
@@ -14,7 +17,7 @@ const Signup: React.FC = () => {
   });
 
   const [error, setError] = useState<string>('');
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,7 +46,7 @@ const Signup: React.FC = () => {
       console.log('Registration Response:', response);
 
       // Redirect after successful registration
-      navigate('/dashboard'); // Assuming you want to navigate to an OTP page
+      router.push('/dashboard'); // Assuming you want to navigate to an OTP page
     } catch (err: any) {
       console.error('Registration error:', err);
       setError(err?.message || 'Something went wrong. Please try again.');
@@ -166,7 +169,7 @@ const Signup: React.FC = () => {
 
             <p className="text-gray-500 mt-4 text-center text-sm">
               Already have an account?{' '}
-              <Link to="/signin" className="text-teal-500 hover:underline">
+              <Link href="/signin" className="text-teal-500 hover:underline">
                 Sign in here
               </Link>
             </p>

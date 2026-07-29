@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Header from './Header';
 import { getUserProfile } from '../../api/api';
 
@@ -55,7 +57,7 @@ const Dashboard: React.FC = () => {
               You have 120 URLs shortened. Manage and view your links.
             </p>
             <Link
-              to="/dashboard/shortlink"
+              href="/dashboard/shortlink"
               className="text-teal-500 hover:underline mt-4 inline-block text-sm sm:text-base"
             >
               View My URLs
@@ -70,7 +72,7 @@ const Dashboard: React.FC = () => {
             <p className="text-sm sm:text-base text-gray-400">
               Click here to generate short URLs and corresponding QR codes.
             </p>
-            <Link to="/dashboard/qr">
+            <Link href="/dashboard/qr">
               <button
                 className="w-full bg-teal-500 text-white py-2 sm:py-3 rounded-lg font-medium mt-4 text-sm sm:text-base"
               >
@@ -86,7 +88,7 @@ const Dashboard: React.FC = () => {
               View clicks, performance, and more.
             </p>
             <Link
-              to="/dashboard/analytics"
+              href="/dashboard/analytics"
               className="text-teal-500 hover:underline mt-4 inline-block text-sm sm:text-base"
             >
               View Analytics

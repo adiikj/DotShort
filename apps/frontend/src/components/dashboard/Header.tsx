@@ -1,14 +1,17 @@
+"use client";
+
 import { AiOutlineLogout } from 'react-icons/ai'; // Add logout icon
 import { FaChartBar, FaLink, FaUser, FaQrcode, FaChartLine } from 'react-icons/fa'; // For dashboard items
 import { logout } from '../../redux/authSlice';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation(); // Get the current URL path
+  const pathname = usePathname(); // Get the current URL path
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = (): void => {
@@ -18,7 +21,7 @@ const Header: React.FC = () => {
   };
 
   // Helper function to check if the current path matches the link
-  const isActiveLink = (path: string): boolean => location.pathname === path;
+  const isActiveLink = (path: string): boolean => pathname === path;
 
   return (
     <div className="bg-white/5 backdrop-blur-md p-6 sm:w-64 sm:fixed sm:h-full">
@@ -39,7 +42,7 @@ const Header: React.FC = () => {
         } sm:block`}
       >
         <li className="mb-6">
-          <Link to="/dashboard">
+          <Link href="/dashboard">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white mt-0 md:mt-16 ${
                 isActiveLink('/dashboard') ? 'text-teal-500' : ''
@@ -50,7 +53,7 @@ const Header: React.FC = () => {
           </Link>
         </li>
         <li className="mb-6">
-          <Link to="/dashboard/shortlink">
+          <Link href="/dashboard/shortlink">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white ${
                 isActiveLink('/dashboard/shortlink') ? 'text-teal-500' : ''
@@ -61,7 +64,7 @@ const Header: React.FC = () => {
           </Link>
         </li>
         <li className="mb-6">
-          <Link to="/dashboard/qr">
+          <Link href="/dashboard/qr">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white ${
                 isActiveLink('/dashboard/qr') ? 'text-teal-500' : ''
@@ -72,7 +75,7 @@ const Header: React.FC = () => {
           </Link>
         </li>
         <li className="mb-6">
-          <Link to="/dashboard/analytics">
+          <Link href="/dashboard/analytics">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white ${
                 isActiveLink('/dashboard/analytics') ? 'text-teal-500' : ''
@@ -83,7 +86,7 @@ const Header: React.FC = () => {
           </Link>
         </li>
         <li className="mb-6">
-          <Link to="/dashboard/savedlinks">
+          <Link href="/dashboard/savedlinks">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white ${
                 isActiveLink('/dashboard/savedlinks') ? 'text-teal-500' : ''
@@ -95,7 +98,7 @@ const Header: React.FC = () => {
         </li>
 
         <li className="mb-6">
-          <Link to="/profile">
+          <Link href="/profile">
             <button
               className={`flex items-center text-lg gap-3 text-gray-400 hover:text-white ${
                 isActiveLink('/profile') ? 'text-teal-500' : ''

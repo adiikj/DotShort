@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import InputField from "./InputField";
 import ShortenedLink from "./ShortenedLink";
 import { shortenUrl } from "../../api/api";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Shorten: React.FC = () => {
   const [shortenedUrl, setShortenedUrl] = useState<string | null>(null);
@@ -56,7 +58,7 @@ const Shorten: React.FC = () => {
 
         <div className="text-center text-white text-md md:text-lg">
           Want to generate a QR instead?{" "}
-          <Link to="/generateqr">
+          <Link href="/generateqr">
             <span className="text-teal-400">Generate QR</span>
           </Link>
         </div>

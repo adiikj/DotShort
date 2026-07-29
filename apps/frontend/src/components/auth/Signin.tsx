@@ -1,11 +1,13 @@
+"use client";
+
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { loginUser } from "../../api/api"; // Replace with the correct import path for your loginUser API
 import Cookies from "js-cookie";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { login } from "../../redux/authSlice"; // Adjust to your actual Redux slice action path
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 // Define the root state type
 interface RootState {
@@ -21,7 +23,7 @@ const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false); // State for toggling password visibility
   const [error, setError] = useState<string | null>(null); // State for errors
   const [isLoading, setIsLoading] = useState<boolean>(false); // State for loading
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   // Get the authentication state from Redux
@@ -30,9 +32,9 @@ const Signin: React.FC = () => {
   // Redirect to dashboard if authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      router.push("/dashboard");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, router]);
 
   // Handle sign-in form submission
   const handleSignIn = async (e: FormEvent) => {
@@ -128,7 +130,7 @@ const Signin: React.FC = () => {
         {error && <p className="text-red-500 text-center mt-2 text-sm">{error}</p>}
         <p className="text-gray-500 mt-4 text-center text-sm">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-purple-500 hover:underline">
+          <Link href="/signup" className="text-purple-500 hover:underline">
             Sign up here
           </Link>
         </p>

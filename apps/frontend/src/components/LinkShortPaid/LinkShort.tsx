@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import InputField from "../shortenLink/InputField";
 import ShortenedLink from "../shortenLink/ShortenedLink";
 import { shortenUrl } from "../../api/api"; // Import the updated shortenUrl API
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import Header from "../dashboard/Header";
 
 const LinkShort: React.FC = () => {
@@ -176,7 +178,7 @@ const LinkShort: React.FC = () => {
           {/* Navigation Link */}
           <div className="text-center text-sm sm:text-lg text-gray-300">
             Want to generate a QR instead?{" "}
-            <Link to="/dashboard/qr" className="text-teal-400 hover:underline">
+            <Link href="/dashboard/qr" className="text-teal-400 hover:underline">
               Generate QR
             </Link>
           </div>

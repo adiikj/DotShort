@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { qrUrl } from "../../api/api";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const QRPage: React.FC = () => {
   const [qrCode, setQrCode] = useState<string | null>(null);
@@ -106,7 +108,7 @@ const QRPage: React.FC = () => {
         {/* Navigation Link */}
         <div className="text-center text-sm sm:text-lg">
           Want to shorten a URL instead?{" "}
-          <Link to="/shortenlink" className="text-teal-400 hover:underline">
+          <Link href="/shortenlink" className="text-teal-400 hover:underline">
             Shorten a URL
           </Link>
         </div>

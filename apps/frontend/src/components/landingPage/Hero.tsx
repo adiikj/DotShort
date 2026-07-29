@@ -1,7 +1,11 @@
+"use client";
+
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Particles from 'react-tsparticles';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
+
+const Particles = dynamic(() => import('react-tsparticles'), { ssr: false });
 
 const Hero: React.FC = () => {
     return (
@@ -102,7 +106,7 @@ const Hero: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.7 }}
                     >
-                        <Link to="/shortenlink">
+                        <Link href="/shortenlink">
                             <button className="bg-teal-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-transparent hover:text-teal-500 hover:border-teal-500 hover:border-2 transition duration-300 shadow-lg transform hover:scale-105 border-2 border-transparent">
                                 Shorten a Link
                             </button>
@@ -113,7 +117,7 @@ const Hero: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.9 }}
                     >
-                        <Link to="/generateqr">
+                        <Link href="/generateqr">
                             <button className="bg-purple-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-transparent hover:text-purple-500 hover:border-purple-500 hover:border-2 transition duration-300 shadow-lg transform hover:scale-105 border-2 border-transparent">
                                 Generate QR
                             </button>

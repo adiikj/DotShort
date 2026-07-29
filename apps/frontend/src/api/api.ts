@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
-const USER_URL = import.meta.env.VITE_API_USER_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const USER_URL = process.env.NEXT_PUBLIC_API_USER_URL;
 
 interface ShortenUrlResponse {
   shortUrl: string;
