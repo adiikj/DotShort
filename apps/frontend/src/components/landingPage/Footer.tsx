@@ -24,6 +24,19 @@ const Footer: React.FC = () => {
             Terms of Service
           </a>
         </div>
+
+        {/* Attribution */}
+        <p className="mt-4 text-xs sm:text-sm text-gray-500">
+          Designed and developed by{' '}
+          <a
+            href="https://adiikj.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-teal-400 hover:text-teal-300 transition duration-300"
+          >
+            Aditya
+          </a>
+        </p>
       </div>
     </footer>
   );
