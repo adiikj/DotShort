@@ -1,9 +1,9 @@
-import type { IUser } from "../../models/user.models.js";
+import type { SessionUser } from "../session.js";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: IUser | null;
+      user?: SessionUser | null;
     }
   }
 }

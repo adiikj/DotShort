@@ -1,17 +1,32 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { DB_NAME } from "../constants.js";
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
+import * as schema from "./schema.js";
 
+// Loaded here too: ESM import hoisting means this module can evaluate before
+// the dotenv.config() call in index.ts.
 dotenv.config();
 
-const connectDB = async (): Promise<void> => {
-  try {
-    const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
-    console.log(`Connected to the MongoDB ${connectionInstance.connection.host}`);
-  } catch (error) {
-    console.error("Error in connecting to the database");
-    throw error;
-  }
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set: copy .env.example to .env first");
+}
+
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 10,
+});
+
+export const db = drizzle(pool, { schema });
+
+export const checkDbConnection = async (): Promise<void> => {
+  await pool.query("select 1");
+  console.log("Connected to PostgreSQL");
 };
 
-export default connectDB;
+export const closeDb = async (): Promise<void> => {
+  await pool.end();
+};
+
+export { schema };
+// Re-export tables + row types so controllers can import everything from here.
+export * from "./schema.js";

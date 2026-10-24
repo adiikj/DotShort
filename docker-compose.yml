@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: dotshort-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dotshort
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: dotshort
+    ports:
+      # Host 5434 avoids colliding with native Postgres (5432) and other
+      # project containers (5433).
+      - "5434:5432"
+    volumes:
+      # Postgres 18+ images mount the parent dir so major-version upgrades can
+      # use pg_upgrade --link (see docker-library/postgres#1259).
+      - dotshort-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dotshort -d dotshort"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  dotshort-pgdata:
