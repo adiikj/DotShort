@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { LinkRoute } from "@/components/illustrations/link-route";
+import { BuiltBy } from "@/components/layout/built-by";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const FACTS = [
@@ -62,9 +63,10 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
 
-        <footer className="flex items-center gap-4 px-5 py-5 text-xs text-muted-foreground sm:px-8">
+        <footer className="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 py-5 text-xs text-muted-foreground sm:px-8">
           <span className="lg:hidden">© {year} DotShort</span>
-          <span className="ml-auto">Short your dot.</span>
+          <BuiltBy className="ml-auto" />
+          <span>Short your dot.</span>
         </footer>
       </div>
     </div>

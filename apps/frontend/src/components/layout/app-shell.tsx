@@ -19,6 +19,7 @@ import { clearSession, getAccessToken } from "@/lib/auth";
 import { logoutUser } from "@/api/api";
 import { useProfileQuery } from "@/redux/api";
 import { Logo } from "@/components/brand/logo";
+import { BuiltBy } from "@/components/layout/built-by";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -184,7 +185,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Content */}
-      <div className="lg:pl-60">
+      <div className="flex min-h-screen flex-col lg:pl-60">
         {/* Mobile top bar */}
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b bg-background/90 px-4 backdrop-blur lg:hidden">
           <button
@@ -197,9 +198,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Logo href="/dashboard" />
           <ThemeToggle />
         </header>
-        <main className="mx-auto w-full max-w-6xl px-4 py-7 sm:px-6 lg:px-8 lg:py-9">
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-7 sm:px-6 lg:px-8 lg:py-9">
           {children}
         </main>
+        <footer className="border-t">
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-4 text-xs text-muted-foreground sm:px-6 lg:px-8">
+            <span>© {new Date().getFullYear()} DotShort</span>
+            <BuiltBy />
+          </div>
+        </footer>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { ChartGlyph, CodeGlyph, LockGlyph, QrGlyph, TimerGlyph } from "@/components/brand/glyphs";
 import { LinkRoute } from "@/components/illustrations/link-route";
+import { BuiltBy } from "@/components/layout/built-by";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { HeroInput } from "@/components/landing/hero-input";
@@ -421,9 +422,12 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-8 flex flex-col justify-between gap-2 border-t pt-5 text-xs text-muted-foreground sm:flex-row">
+          <div className="mt-8 flex flex-col justify-between gap-2 border-t pt-5 text-xs text-muted-foreground sm:flex-row sm:items-center">
             <span>© {year} DotShort</span>
-            <span>Short your dot.</span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <BuiltBy />
+              <span>Short your dot.</span>
+            </div>
           </div>
         </div>
       </footer>
