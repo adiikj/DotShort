@@ -2,17 +2,147 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@layer base {
+  :root {
+    /* Pale paper, green-black ink, deep forest. Orange is the terminal dot. */
+    --background: 160 12% 97%;
+    --foreground: 160 18% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 18% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 18% 10%;
+
+    --primary: 158 60% 26%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 160 12% 93%;
+    --secondary-foreground: 160 18% 13%;
+
+    --muted: 160 12% 93%;
+    --muted-foreground: 160 7% 40%;
+
+    --accent: 158 40% 94%;
+    --accent-foreground: 158 60% 22%;
+
+    --signal: 20 85% 52%;
+
+    --destructive: 0 68% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 10% 87%;
+    --input: 160 9% 80%;
+    --ring: 158 60% 26%;
+
+    --radius: 0.5rem;
   }
-  
-  .animate-gradient-xy {
-    background-size: 400% 400%;
-    animation: gradientMove 15s ease infinite;
+
+  .dark {
+    --background: 162 24% 6%;
+    --foreground: 150 12% 92%;
+
+    --card: 162 20% 9%;
+    --card-foreground: 150 12% 92%;
+
+    --popover: 162 20% 10%;
+    --popover-foreground: 150 12% 92%;
+
+    --primary: 158 55% 55%;
+    --primary-foreground: 162 30% 6%;
+
+    --secondary: 162 16% 13%;
+    --secondary-foreground: 150 12% 88%;
+
+    --muted: 162 16% 13%;
+    --muted-foreground: 160 8% 62%;
+
+    --accent: 158 30% 15%;
+    --accent-foreground: 158 60% 78%;
+
+    --signal: 20 90% 62%;
+
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 162 14% 18%;
+    --input: 162 14% 23%;
+    --ring: 158 55% 55%;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-border;
+  }
+
   body {
-    font-family: 'Poppins', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01" 1;
   }
-  
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--foreground) / 0.16);
+    border-radius: 999px;
+    border: 3px solid hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .delay-1 {
+    animation-delay: 70ms;
+  }
+
+  .delay-2 {
+    animation-delay: 140ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
+import { dotshortApi } from "./api";
 
 const store = configureStore({
-    reducer: {
-        auth: authReducer,
-    },
+  reducer: {
+    [dotshortApi.reducerPath]: dotshortApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dotshortApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
