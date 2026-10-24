@@ -1,11 +1,11 @@
 # DotShort
 
-A URL shortener — pnpm/Turborepo monorepo.
+A URL shortener built as a pnpm/Turborepo monorepo.
 
 ## Structure
 
-- `apps/frontend` — Next.js (App Router) + TypeScript
-- `apps/backend` — Express + TypeScript + MongoDB/Mongoose
+- `apps/frontend`: Next.js (App Router) + TypeScript
+- `apps/backend`: Express + TypeScript + MongoDB/Mongoose
 
 ## Getting started
 
